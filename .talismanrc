@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: docker-compose.yml
+  checksum: 9e42e3015f4ec835db0913e7cb284c04a9802b0fafc05da638939f89b3a6c4fe
+  ignore_detectors: []
