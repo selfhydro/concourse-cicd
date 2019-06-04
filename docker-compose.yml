@@ -40,4 +40,5 @@ services:
     volumes:
       - ./vault-certs:/vault/certs
       - ./vault-config:/vault/config
+      - ./vault/file:/vault/file
     command: server
