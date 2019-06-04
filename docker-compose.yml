@@ -3,6 +3,7 @@ version: '3'
 services:
   concourse-db:
     image: postgres
+    restart: always
     environment:
       POSTGRES_DB: concourse
       POSTGRES_PASSWORD: concourse_pass
@@ -14,6 +15,7 @@ services:
     command: quickstart
     privileged: true
     depends_on: [concourse-db]
+    restart: always
     ports:
       - 8080:8080
     environment:
@@ -35,6 +37,7 @@ services:
   vault:
     image: vault
     cap_add: [IPC_LOCK]
+    restart: always
     ports:
       - 8200:8200
     volumes:
