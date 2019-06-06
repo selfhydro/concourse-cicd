@@ -40,8 +40,10 @@ services:
     restart: always
     ports:
       - 8200:8200
+    environment:
+      VAULT_CACERT: /vault/certs/vault-ca.crt
     volumes:
       - ./vault-certs:/vault/certs
       - ./vault-config:/vault/config
       - ./vault/file:/vault/file
-    command: server
+    command: server -log-level=info
