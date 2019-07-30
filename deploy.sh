@@ -45,6 +45,7 @@ docker-compose exec vault vault operator unseal ${key1}
 docker-compose exec vault vault operator unseal ${key2}
 docker-compose exec vault vault operator unseal ${key3}
 docker-compose exec vault vault login  ${root_token}
+docker-compose exec vault vault vault secrets enable -version=1 -path=concourse kv
 docker-compose exec vault vault policy write concourse ./vault/config/concourse-policy.hcl
 docker-compose exec vault vault auth enable cert
 docker-compose exec vault vault write auth/cert/certs/concourse \
