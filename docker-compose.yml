@@ -12,14 +12,14 @@ services:
 
   concourse:
     image: concourse/concourse
-    command: quickstart
+    command: web
     privileged: true
     depends_on: [concourse-db]
     restart: always
     ports:
       - 8080:8080
     environment:
-      CONCOURSE_LOG_LEVEL: debug
+      CONCOURSE_LOG_LEVEL: info
       CONCOURSE_POSTGRES_HOST: concourse-db
       CONCOURSE_POSTGRES_USER: concourse_user
       CONCOURSE_POSTGRES_PASSWORD: concourse_pass
@@ -34,6 +34,24 @@ services:
       CONCOURSE_VAULT_CLIENT_KEY: /vault-certs/concourse.key
     volumes:
       - ./vault-certs:/vault-certs
+      - ./keys/web:/concourse-keys
+
+  concourse-worker:
+    image: concourse/concourse
+    command: worker
+    privileged: true
+    depends_on: [concourse]
+    volumes:
+      - ./keys/worker:/concourse-keys
+    links: [concourse]
+    stop_signal: SIGUSR2
+    environment:
+      CONCOURSE_TSA_HOST: concourse:2222
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
 
   vault:
     image: vault
