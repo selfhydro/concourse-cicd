@@ -13,13 +13,12 @@ services:
   concourse:
     image: concourse/concourse
     command: web
-    privileged: true
     depends_on: [concourse-db]
     restart: always
     ports:
       - 8080:8080
     environment:
-      CONCOURSE_LOG_LEVEL: info
+      CONCOURSE_LOG_LEVEL: debug
       CONCOURSE_POSTGRES_HOST: concourse-db
       CONCOURSE_POSTGRES_USER: concourse_user
       CONCOURSE_POSTGRES_PASSWORD: concourse_pass
@@ -39,6 +38,7 @@ services:
   concourse-worker:
     image: concourse/concourse
     command: worker
+    restart: always
     privileged: true
     depends_on: [concourse]
     volumes:
@@ -46,6 +46,7 @@ services:
     links: [concourse]
     stop_signal: SIGUSR2
     environment:
+      CONCOURSE_LOG_LEVEL: debug
       CONCOURSE_TSA_HOST: concourse:2222
     logging:
       driver: "json-file"
