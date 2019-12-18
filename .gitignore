@@ -1,5 +1,4 @@
 /vault-certs/*
-/vault/*
 keys/web/authorized_worker_keys
 keys/web/session_signing_key
 keys/web/tsa_host_key
